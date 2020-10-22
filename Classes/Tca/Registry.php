@@ -321,6 +321,12 @@ class Registry implements SingletonInterface
         // group containers by group
         $groupedByGroup = [];
         $defaultGroup = 'container';
+        
+        // Avoid Backend Crash
+        if(!$GLOBALS['TCA']['tt_content']['containerConfiguration']){
+            return [];
+        }
+        
         foreach ($GLOBALS['TCA']['tt_content']['containerConfiguration'] as $cType => $containerConfiguration) {
             if ($containerConfiguration['registerInNewContentElementWizard'] === true) {
                 $group = $containerConfiguration['group'] !== '' ? $containerConfiguration['group'] : $defaultGroup;
